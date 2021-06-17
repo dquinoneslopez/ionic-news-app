@@ -4,9 +4,9 @@
             <span class="text-primary">{{ i + 1 }}. </span>
             <span class="new-source-name">{{ new.source.name }}</span>
         </ion-card-subtitle>
-        <ion-card-title> {{ new.title }} </ion-card-title>
+        <ion-card-title (click)="openNew()"> {{ new.title }} </ion-card-title>
     </ion-card-header>
-    <ion-img *ngIf="new.urlToImage" [src]="new.urlToImage"></ion-img>
+    <ion-img *ngIf="new.urlToImage" [src]="new.urlToImage" (click)="openNew()"></ion-img>
     <ion-card-content>
         <p>{{ new.description }}</p>
     </ion-card-content>
