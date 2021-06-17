@@ -2,11 +2,13 @@
     <ion-toolbar color="dark">
         <ion-title> Headlines </ion-title>
     </ion-toolbar>
-    <ion-segment scrollable mode="md" color="primary">
+    <ion-segment scrollable mode="md" color="primary" (ionChange)="changeCategory($event)">
         <ion-segment-button [value]="cat" mode="md" *ngFor="let cat of categories">
             <ion-label text-capitalize>{{ cat }}</ion-label>
         </ion-segment-button>
     </ion-segment>
 </ion-header>
 
-<ion-content [fullscreen]="true"> </ion-content>
+<ion-content [fullscreen]="true">
+    <app-news [news]="news"></app-news>
+</ion-content>
