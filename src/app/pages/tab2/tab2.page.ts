@@ -1,14 +1,16 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { IonSegment } from '@ionic/angular';
 import { NewsService } from '../../services/news.service';
 import { Article } from '../../interfaces/interfaces';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
 })
-export class Tab2Page implements OnInit {
+export class Tab2Page implements OnInit, OnDestroy {
+  subscriptions: Subscription[] = [];
   categories: string[] = [
     'business',
     'entertainment',
@@ -35,8 +37,14 @@ export class Tab2Page implements OnInit {
   }
 
   loadNews(cat: string) {
-    this.newsService.getTopHeadlinesByCategory(cat).subscribe((resp) => {
-      this.news = [...resp.articles];
-    });
+    this.subscriptions.push(
+      this.newsService.getTopHeadlinesByCategory(cat).subscribe((resp) => {
+        this.news = [...resp.articles];
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }
