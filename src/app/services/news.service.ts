@@ -14,6 +14,8 @@ const headers = new HttpHeaders({
 })
 export class NewsService {
   headlinesPage = 0;
+  categoryPage = 0;
+  currentCat = '';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -30,8 +32,14 @@ export class NewsService {
   }
 
   getTopHeadlinesByCategory(cat: string) {
+    if (this.currentCat === cat) {
+      this.categoryPage++;
+    } else {
+      this.categoryPage = 0;
+      this.currentCat = cat;
+    }
     return this.executeQuery<ResponseTopHeadlines>(
-      `/top-headlines?country=us&category=${cat}`
+      `/top-headlines?country=us&category=${this.currentCat}&page=${this.categoryPage}`
     );
   }
 }

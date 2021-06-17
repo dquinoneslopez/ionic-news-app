@@ -36,12 +36,26 @@ export class Tab2Page implements OnInit, OnDestroy {
     this.loadNews(event.detail.value);
   }
 
-  loadNews(cat: string) {
+  loadNews(cat: string, event?) {
     this.subscriptions.push(
       this.newsService.getTopHeadlinesByCategory(cat).subscribe((resp) => {
-        this.news = [...resp.articles];
+        if (resp.articles.length === 0) {
+          if (event) {
+            event.target.disabled = true;
+            event.target.complete();
+            return;
+          }
+        }
+        this.news.push(...resp.articles);
+        if (event) {
+          event.target.complete();
+        }
       })
     );
+  }
+
+  loadData(event) {
+    this.loadNews(this.segment.value, event);
   }
 
   ngOnDestroy() {
