@@ -3,6 +3,12 @@
         <ion-card-subtitle>
             <span class="text-primary">{{ i + 1 }}. </span>
             <span class="new-source-name">{{ new.source.name }}</span>
+
+            <div class="new-more">
+                <ion-button (click)="launchMenu()" expand="block" fill="clear" shape="round">
+                    <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+                </ion-button>
+            </div>
         </ion-card-subtitle>
         <ion-card-title (click)="openNew()"> {{ new.title }} </ion-card-title>
     </ion-card-header>
