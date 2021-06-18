@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { ActionSheetController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 
 import { Article } from '../../interfaces/interfaces';
 import { DataLocalService } from '../../services/data-local.service';
@@ -25,7 +26,7 @@ export class ArticleComponent implements OnInit {
 
   ngOnInit() {}
 
-  openarticle() {
+  openArticle() {
     const browser = this.iab.create(this.article.url, '_system');
   }
 
