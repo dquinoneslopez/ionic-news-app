@@ -7,13 +7,14 @@ import { Article } from '../../interfaces/interfaces';
 import { DataLocalService } from '../../services/data-local.service';
 
 @Component({
-  selector: 'app-new',
-  templateUrl: './new.component.html',
-  styleUrls: ['./new.component.scss'],
+  selector: 'app-article',
+  templateUrl: './article.component.html',
+  styleUrls: ['./article.component.scss'],
 })
-export class NewComponent implements OnInit {
-  @Input() new: Article;
+export class ArticleComponent implements OnInit {
+  @Input() article: Article;
   @Input() i: number;
+  @Input() favs: boolean;
 
   constructor(
     private iab: InAppBrowser,
@@ -24,11 +25,33 @@ export class NewComponent implements OnInit {
 
   ngOnInit() {}
 
-  openNew() {
-    const browser = this.iab.create(this.new.url, '_system');
+  openarticle() {
+    const browser = this.iab.create(this.article.url, '_system');
   }
 
   async launchMenu() {
+    let saveDeleteBtn;
+
+    if (this.favs) {
+      saveDeleteBtn = {
+        text: 'Remove',
+        icon: 'trash',
+        cssClass: 'action-dark',
+        handler: () => {
+          this.dataLocalService.removeArticle(this.article);
+        },
+      };
+    } else {
+      saveDeleteBtn = {
+        text: 'Favorite',
+        icon: 'heart',
+        cssClass: 'action-dark',
+        handler: () => {
+          this.dataLocalService.saveArticle(this.article);
+        },
+      };
+    }
+
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
         {
@@ -37,21 +60,14 @@ export class NewComponent implements OnInit {
           cssClass: 'action-dark',
           handler: () => {
             this.socialSharing.share(
-              this.new.title,
-              this.new.source.name,
+              this.article.title,
+              this.article.source.name,
               '',
-              this.new.url
+              this.article.url
             );
           },
         },
-        {
-          text: 'Favorite',
-          icon: 'heart',
-          cssClass: 'action-dark',
-          handler: () => {
-            this.dataLocalService.saveArticle(this.new);
-          },
-        },
+        saveDeleteBtn,
         {
           text: 'Cancel',
           icon: 'close',

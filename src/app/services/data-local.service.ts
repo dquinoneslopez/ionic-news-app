@@ -21,7 +21,7 @@ export class DataLocalService {
   }
 
   saveArticle(article: Article) {
-    const exists = this.favorites.find((art) => art.title === article.title);
+    const exists = this.favorites.find((fav) => fav.title === article.title);
 
     if (!exists) {
       this.favorites.unshift(article);
@@ -32,5 +32,11 @@ export class DataLocalService {
   async loadFavorites() {
     const favs = await this.storage.get('favorites');
     this.favorites = favs ? [...favs] : [];
+  }
+
+  removeArticle(article: Article) {
+    this.favorites = this.favorites.filter(
+      (fav) => fav.title !== article.title
+    );
   }
 }

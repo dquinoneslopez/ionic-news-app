@@ -1,7 +1,7 @@
 <ion-grid fixed>
     <ion-row>
-        <ion-col size="12" size-lg="3" size-md="4" size-sm="2" size-xs="12" *ngFor="let new of news; let i = index">
-            <app-new [new]="new" [i]="i"></app-new>
+        <ion-col size="12" size-lg="3" size-md="4" size-sm="2" size-xs="12" *ngFor="let article of news; let i = index">
+            <app-article [article]="article" [i]="i" [favs]="favs"></app-article>
         </ion-col>
     </ion-row>
 </ion-grid>

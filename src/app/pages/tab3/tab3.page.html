@@ -5,8 +5,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <div *ngIf="datalocalService.favorites.length === 0">
-        <p>There are no articles saved.</p>
+    <div *ngIf="datalocalService.favorites.length === 0" class="no-favs">
+        <h2>There are no articles saved.</h2>
     </div>
-    <app-news *ngIf="datalocalService.favorites.length > 0" [news]="datalocalService.favorites"></app-news>
+    <app-news *ngIf="datalocalService.favorites.length > 0" [news]="datalocalService.favorites" [favs]="true"></app-news>
 </ion-content>

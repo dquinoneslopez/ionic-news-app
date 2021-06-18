@@ -1,0 +1,14 @@
+ion-slides,
+ion-slide {
+    width: 100%;
+    height: 100%;
+}
+
+.no-favs {
+    text-align: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
