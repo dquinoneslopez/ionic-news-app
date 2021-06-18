@@ -7,10 +7,11 @@ import { Article } from '../interfaces/interfaces';
   providedIn: 'root',
 })
 export class DataLocalService {
-  news: Article[] = [];
+  favorites: Article[] = [];
 
   constructor(private storage: Storage) {
     this.init();
+    this.loadFavorites();
   }
 
   async init() {
@@ -20,13 +21,16 @@ export class DataLocalService {
   }
 
   saveArticle(article: Article) {
-    const exists = this.news.find((art) => art.title === article.title);
+    const exists = this.favorites.find((art) => art.title === article.title);
 
     if (!exists) {
-      this.news.unshift(article);
-      this.storage.set('favorites', this.news);
+      this.favorites.unshift(article);
+      this.storage.set('favorites', this.favorites);
     }
   }
 
-  loadFavorites() {}
+  async loadFavorites() {
+    const favs = await this.storage.get('favorites');
+    this.favorites = favs ? [...favs] : [];
+  }
 }
